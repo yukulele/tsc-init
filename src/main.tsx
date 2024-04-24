@@ -3,6 +3,7 @@ import { useRef, useEffect, useLayoutEffect, useContext, useCallback } from 'pre
 import { AppPropsContext, RadioContext } from './context.jsx';
 import { CheckBox, RadioButton, TextBox } from './controls.jsx';
 import { Bundler, Environment, GoodIdeas, JSXGroup, ModuleSystem, RuntimeVersion, Strictness, Style } from './options.jsx';
+import { JSX } from 'preact';
 
 export const PageNames = [
     "Environment",
@@ -13,8 +14,34 @@ export const PageNames = [
     "JSX",
     "Good-Ideas",
     "Strictness-Options",
-    "Style-Options"
+    "Style-Options",
+    "Done"
 ] as const;
+
+const GoodIdeaNames = [
+    "verbatimModuleSyntax",
+    "isolatedModules",
+    "composite"
+] as const;
+
+const StrictnessNames = [
+    "noUncheckedIndexedAccess",
+    "exactOptionalPropertyTypes",
+] as const;
+
+const StyleNames = [
+    "noImplicitReturns",
+    "noImplicitOverride",
+    "noUnusedLocals",
+    "noUnusedParameters",
+    "noFallthroughCasesInSwitch",
+    "noPropertyAccessFromIndexSignature",
+] as const;
+
+type AllBooleanOptionsNames =
+    (typeof GoodIdeaNames)[number] |
+    (typeof StrictnessNames)[number] |
+    (typeof StyleNames)[number];
 
 export type PageName = (typeof PageNames)[number];
 
@@ -29,21 +56,7 @@ export type AppProps = {
 
     srcDir: string;
     outDir: string;
-
-    verbatimModuleSyntax: boolean;
-    isolatedModules: boolean;
-    composite: boolean;
-
-    exactOptionalPropertyTypes: boolean;
-    noUncheckedIndexedAccess: boolean;
-
-    noImplicitReturns: boolean;
-    noImplicitOverride: boolean;
-    noUnusedLocals: boolean;
-    noUnusedParameters: boolean;
-    noFallthroughCasesInSwitch: boolean;
-    noPropertyAccessFromIndexSignature: boolean;
-};
+} & Record<AllBooleanOptionsNames, boolean>;
 
 export const update = (() => {
     const renderTarget = document.getElementById("app") ?? (() => { throw new Error("Couldn't find div#app") })();
@@ -99,7 +112,7 @@ function App(props: AppProps) {
         {getPage()}
     </AppPropsContext.Provider>;
 
-    function getPage() {
+    function getPage(): JSX.Element {
         switch (props.pageName) {
             case 'Environment':
                 return <Page_Environment />;
@@ -119,8 +132,9 @@ function App(props: AppProps) {
                 return <Page_Strictness />;
             case 'Style-Options':
                 return <Page_Style />;
+            case "Done":
+                return <Page_Done />;
         }
-        return <Page_Environment />;
     }
 }
 
@@ -132,6 +146,7 @@ function Page_Environment() {
             {Environment}
         </div>
         <NavBar />
+        <DownloadBar />
     </>;
 }
 
@@ -141,6 +156,7 @@ function Page_RuntimeTarget() {
         <div class="explanation">How old of a JavaScript version do you need to support?</div>
         <div class="options">{RuntimeVersion}</div>
         <NavBar />
+        <DownloadBar />
     </>;
 }
 
@@ -150,6 +166,7 @@ function Page_ModuleSystem() {
         <div class="explanation">Are you primarily writing ECMAScript modules (ESM) or CommonJS modules?</div>
         <div class="options">{ModuleSystem}</div>
         <NavBar />
+        <DownloadBar />
     </>;
 }
 
@@ -159,6 +176,7 @@ function Page_Bundler() {
         <div class="explanation">Do you want to use a tool like esbuild, rollup, webpack, parcel, etc, to produce JS from your TypeScript files?</div>
         <div class="options">{Bundler}</div>
         <NavBar />
+        <DownloadBar />
     </>;
 }
 
@@ -168,6 +186,7 @@ function Page_JSX() {
         <div class="explanation">Are you using JSX syntax?</div>
         <div class="options">{JSXGroup}</div>
         <NavBar />
+        <DownloadBar />
     </>;
 }
 
@@ -184,6 +203,7 @@ function Page_FileLayout() {
         </div>
 
         <NavBar />
+        <DownloadBar />
     </>;
 }
 
@@ -196,6 +216,7 @@ function Page_GoodIdeas() {
         </div>
         <div class="options">{GoodIdeas}</div>
         <NavBar />
+        <DownloadBar />
     </>;
 }
 
@@ -207,6 +228,7 @@ function Page_Strictness() {
         </div>
         <div class="options">{Strictness}</div>
         <NavBar />
+        <DownloadBar />
     </>;
 }
 
@@ -219,9 +241,22 @@ function Page_Style() {
         </div>
         <div class="options">{Style}</div>
         <NavBar />
+        <DownloadBar />
     </>;
 }
 
+function Page_Done() {
+    return <>
+        <h2 class="header">Coding Style Options</h2>
+        <div class="explanation">
+            You can enable some additional style checks that are not on by default.
+            These do not affect the correctness of a program, just the way you write code.
+        </div>
+        <div class="options">{Style}</div>
+        <NavBar />
+        <DownloadBar />
+    </>;
+}
 
 function NavBar() {
     const props = useContext(AppPropsContext);
@@ -254,7 +289,140 @@ function ProgressBar() {
     </div>;
 }
 
-export { };
+function DownloadBar() {
+    const props = useContext(AppPropsContext);
+    const copyToClipboard = useCallback(() => {
+        if (window.location.protocol === "https") {
+            navigator.clipboard.writeText(getJSON(props));
+        } else {
+            alert(getJSON(props));
+        }
+    }, [props]);
+    
+    const download = useCallback(() => {
+        const link = document.createElement('a');
+        const blob = new Blob([getJSON(props)], { 'type': "text/json" });
+        link.href = window.URL.createObjectURL(blob);
+        link.download = "tsconfig.json";
+        link.click();        
+    }, [props]);
+
+    return <>
+        <div class="download-bar">
+            <span tabIndex={0} onClick={download}>
+                <span class="material-symbols-outlined icon">download</span>
+                Download
+            </span>
+
+            <span tabIndex={0}>
+                <span class="material-symbols-outlined icon">data_object</span>
+                Show JSON
+            </span>
+
+            <span tabIndex={0} onClick={copyToClipboard}>
+                <span class="material-symbols-outlined icon">content_copy</span>
+                Copy to Clipboard
+            </span>
+        </div>
+        <pre>{getJSON(props)}</pre>
+    </>
+}
+
+function getJSON(props: AppProps) {
+    const lines: string[] = [];
+
+    const optionsLines: string[] = [];
+
+    // Environment, target, module
+    optionsLines.push(`"lib": ${getLib()}`);;
+    optionsLines.push(`"target": "${getTargetName()}"`);
+
+    // Module logic, god help me
+    if (props.environment === "donebun") {
+        // donebun users don't need to use a bundler, presumably
+        optionsLines.push(`"module": "preserve"`);
+    } else {
+        // Possible bundler
+        if (props.bundler === "use-bundler") {
+            optionsLines.push(`"module": "esnext"`);
+            optionsLines.push(`"allowImportingTsExtensions": true`);
+            optionsLines.push(`"moduleResolution": "bundler"`);
+        } else {
+            optionsLines.push(`"module": "nodenext"`);
+        }
+    }
+
+    // File layout
+    optionsLines.push(`"rootDir": "${props.srcDir}"`);
+    if (props.environment === "donebun" || props.bundler === "use-bundler") {
+        // Emit declarations for libraries only
+        if (props.environment === "agnostic") {
+            optionsLines.push(`"emitDeclarationOnly": true`);
+        } else {
+            optionsLines.push(`"noEmit": true`);
+        }
+    } else {
+        optionsLines.push(`"outDir": "${props.outDir}"`);
+    }
+
+    // JSX
+    if (props.jsx === "newer") {
+        if (props.bundler === "use-bundler") {
+            // Let bundlers handle jsx
+            optionsLines.push(`"jsx": "preserve"`);
+        } else {
+            optionsLines.push(`"jsx": "react-jsx"`);
+        }
+    }
+
+    // Set 'types'
+    if (props.environment === "nodejs") {
+        optionsLines.push(`"types": ["node"]`)
+    } else {
+        optionsLines.push(`"types": []`)
+    }
+
+    // Strictness + good ideas
+    optionsLines.push(`"strict": true`);
+    optionsLines.push(`"forceConsistentCasingInFileNames": true`);
+    optionsLines.push(`"moduleDetection": "force"`);
+    for (const str of [...StrictnessNames, ...GoodIdeaNames]) {
+        if (props[str]) optionsLines.push(`"${str}": true`);
+    }
+
+    // Style
+    for (const str of StyleNames) {
+        if (props[str]) optionsLines.push(`"${str}": true`);
+    }
+
+    // Misc
+    optionsLines.push(`"skipLibCheck": true`);
+
+    lines.push("{");
+    lines.push(`\t"compilerOptions": {`);
+    lines.push(optionsLines.map(line => `\t\t${line}`).join(",\n"));
+    lines.push(`\t},`);
+    lines.push(`\t"include": ["${props.srcDir}"]`);
+
+    lines.push("}\n");
+    return lines.join("\n");
+
+    function getLib() {
+        if (props.environment === "web") {
+            return `["dom", "${getTargetName()}"]`;
+        } else {
+            return `["${getTargetName()}"]`;
+        }
+    }
+
+    function getTargetName() {
+        return {
+            "runtime-next": "esnext",
+            "runtime-modern": "es2022",
+            "runtime-older": "es2016"
+        }[props.runtimeVersion];
+    }
+}
 
 
 function classNames(obj: object) {

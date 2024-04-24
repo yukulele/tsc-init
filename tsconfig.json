@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "target": "es2020",
+    "lib": ["dom", "esnext"],
+    "target": "esnext",
     "module": "commonjs",
     "jsx": "preserve",
     "moduleDetection": "force",
@@ -9,5 +10,6 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true
-  }
+  },
+  "include": ["./src"]
 }

@@ -555,7 +555,25 @@
     "JSX",
     "Good-Ideas",
     "Strictness-Options",
-    "Style-Options"
+    "Style-Options",
+    "Done"
+  ];
+  var GoodIdeaNames = [
+    "verbatimModuleSyntax",
+    "isolatedModules",
+    "composite"
+  ];
+  var StrictnessNames = [
+    "noUncheckedIndexedAccess",
+    "exactOptionalPropertyTypes"
+  ];
+  var StyleNames = [
+    "noImplicitReturns",
+    "noImplicitOverride",
+    "noUnusedLocals",
+    "noUnusedParameters",
+    "noFallthroughCasesInSwitch",
+    "noPropertyAccessFromIndexSignature"
   ];
   var update = (() => {
     const renderTarget = document.getElementById("app") ?? (() => {
@@ -622,36 +640,40 @@
           return /* @__PURE__ */ g(Page_Strictness, null);
         case "Style-Options":
           return /* @__PURE__ */ g(Page_Style, null);
+        case "Done":
+          return /* @__PURE__ */ g(Page_Done, null);
       }
-      return /* @__PURE__ */ g(Page_Environment, null);
     }
   }
   function Page_Environment() {
-    return /* @__PURE__ */ g(w, null, /* @__PURE__ */ g("h2", { class: "header" }, "Environment"), /* @__PURE__ */ g("div", { class: "explanation" }, "Where will your code be running? Note that if you have different runtime environments and aren't writing platform-agnostic code, you'll need to use multiple tsconfig files."), /* @__PURE__ */ g("div", { class: "options" }, Environment), /* @__PURE__ */ g(NavBar, null));
+    return /* @__PURE__ */ g(w, null, /* @__PURE__ */ g("h2", { class: "header" }, "Environment"), /* @__PURE__ */ g("div", { class: "explanation" }, "Where will your code be running? Note that if you have different runtime environments and aren't writing platform-agnostic code, you'll need to use multiple tsconfig files."), /* @__PURE__ */ g("div", { class: "options" }, Environment), /* @__PURE__ */ g(NavBar, null), /* @__PURE__ */ g(DownloadBar, null));
   }
   function Page_RuntimeTarget() {
-    return /* @__PURE__ */ g(w, null, /* @__PURE__ */ g("h2", { class: "header" }, "Runtime Version"), /* @__PURE__ */ g("div", { class: "explanation" }, "How old of a JavaScript version do you need to support?"), /* @__PURE__ */ g("div", { class: "options" }, RuntimeVersion), /* @__PURE__ */ g(NavBar, null));
+    return /* @__PURE__ */ g(w, null, /* @__PURE__ */ g("h2", { class: "header" }, "Runtime Version"), /* @__PURE__ */ g("div", { class: "explanation" }, "How old of a JavaScript version do you need to support?"), /* @__PURE__ */ g("div", { class: "options" }, RuntimeVersion), /* @__PURE__ */ g(NavBar, null), /* @__PURE__ */ g(DownloadBar, null));
   }
   function Page_ModuleSystem() {
-    return /* @__PURE__ */ g(w, null, /* @__PURE__ */ g("h2", { class: "header" }, "Module System"), /* @__PURE__ */ g("div", { class: "explanation" }, "Are you primarily writing ECMAScript modules (ESM) or CommonJS modules?"), /* @__PURE__ */ g("div", { class: "options" }, ModuleSystem), /* @__PURE__ */ g(NavBar, null));
+    return /* @__PURE__ */ g(w, null, /* @__PURE__ */ g("h2", { class: "header" }, "Module System"), /* @__PURE__ */ g("div", { class: "explanation" }, "Are you primarily writing ECMAScript modules (ESM) or CommonJS modules?"), /* @__PURE__ */ g("div", { class: "options" }, ModuleSystem), /* @__PURE__ */ g(NavBar, null), /* @__PURE__ */ g(DownloadBar, null));
   }
   function Page_Bundler() {
-    return /* @__PURE__ */ g(w, null, /* @__PURE__ */ g("h2", { class: "header" }, "Bundler"), /* @__PURE__ */ g("div", { class: "explanation" }, "Do you want to use a tool like esbuild, rollup, webpack, parcel, etc, to produce JS from your TypeScript files?"), /* @__PURE__ */ g("div", { class: "options" }, Bundler), /* @__PURE__ */ g(NavBar, null));
+    return /* @__PURE__ */ g(w, null, /* @__PURE__ */ g("h2", { class: "header" }, "Bundler"), /* @__PURE__ */ g("div", { class: "explanation" }, "Do you want to use a tool like esbuild, rollup, webpack, parcel, etc, to produce JS from your TypeScript files?"), /* @__PURE__ */ g("div", { class: "options" }, Bundler), /* @__PURE__ */ g(NavBar, null), /* @__PURE__ */ g(DownloadBar, null));
   }
   function Page_JSX() {
-    return /* @__PURE__ */ g(w, null, /* @__PURE__ */ g("h2", { class: "header" }, "JSX"), /* @__PURE__ */ g("div", { class: "explanation" }, "Are you using JSX syntax?"), /* @__PURE__ */ g("div", { class: "options" }, JSXGroup), /* @__PURE__ */ g(NavBar, null));
+    return /* @__PURE__ */ g(w, null, /* @__PURE__ */ g("h2", { class: "header" }, "JSX"), /* @__PURE__ */ g("div", { class: "explanation" }, "Are you using JSX syntax?"), /* @__PURE__ */ g("div", { class: "options" }, JSXGroup), /* @__PURE__ */ g(NavBar, null), /* @__PURE__ */ g(DownloadBar, null));
   }
   function Page_FileLayout() {
-    return /* @__PURE__ */ g(w, null, /* @__PURE__ */ g("h2", { class: "header" }, "File Layout"), /* @__PURE__ */ g("div", { class: "explanation" }, "How will you arrange your project on disk?"), /* @__PURE__ */ g("div", { class: "options" }, /* @__PURE__ */ g(TextBox, { propKey: "srcDir", name: "Source Directory", description: "Location of input files" }), /* @__PURE__ */ g(TextBox, { propKey: "outDir", name: "Output Directory", description: "Where .js, .d.ts, and other outputs should be built to" })), /* @__PURE__ */ g(NavBar, null));
+    return /* @__PURE__ */ g(w, null, /* @__PURE__ */ g("h2", { class: "header" }, "File Layout"), /* @__PURE__ */ g("div", { class: "explanation" }, "How will you arrange your project on disk?"), /* @__PURE__ */ g("div", { class: "options" }, /* @__PURE__ */ g(TextBox, { propKey: "srcDir", name: "Source Directory", description: "Location of input files" }), /* @__PURE__ */ g(TextBox, { propKey: "outDir", name: "Output Directory", description: "Where .js, .d.ts, and other outputs should be built to" })), /* @__PURE__ */ g(NavBar, null), /* @__PURE__ */ g(DownloadBar, null));
   }
   function Page_GoodIdeas() {
-    return /* @__PURE__ */ g(w, null, /* @__PURE__ */ g("h2", { class: "header" }, "Additional Configuration Checks"), /* @__PURE__ */ g("div", { class: "explanation" }, "We recommend these options for new codebases, though you might have reason to turn them off. They're easiest to comply with in a new project but can be a lot of work to enable later."), /* @__PURE__ */ g("div", { class: "options" }, GoodIdeas), /* @__PURE__ */ g(NavBar, null));
+    return /* @__PURE__ */ g(w, null, /* @__PURE__ */ g("h2", { class: "header" }, "Additional Configuration Checks"), /* @__PURE__ */ g("div", { class: "explanation" }, "We recommend these options for new codebases, though you might have reason to turn them off. They're easiest to comply with in a new project but can be a lot of work to enable later."), /* @__PURE__ */ g("div", { class: "options" }, GoodIdeas), /* @__PURE__ */ g(NavBar, null), /* @__PURE__ */ g(DownloadBar, null));
   }
   function Page_Strictness() {
-    return /* @__PURE__ */ g(w, null, /* @__PURE__ */ g("h2", { class: "header" }, "Strictness Options"), /* @__PURE__ */ g("div", { class: "explanation" }, "You can enable some additional strictness options that are not on by default. These may or may not be a good fit for the way you write code."), /* @__PURE__ */ g("div", { class: "options" }, Strictness), /* @__PURE__ */ g(NavBar, null));
+    return /* @__PURE__ */ g(w, null, /* @__PURE__ */ g("h2", { class: "header" }, "Strictness Options"), /* @__PURE__ */ g("div", { class: "explanation" }, "You can enable some additional strictness options that are not on by default. These may or may not be a good fit for the way you write code."), /* @__PURE__ */ g("div", { class: "options" }, Strictness), /* @__PURE__ */ g(NavBar, null), /* @__PURE__ */ g(DownloadBar, null));
   }
   function Page_Style() {
-    return /* @__PURE__ */ g(w, null, /* @__PURE__ */ g("h2", { class: "header" }, "Coding Style Options"), /* @__PURE__ */ g("div", { class: "explanation" }, "You can enable some additional style checks that are not on by default. These do not affect the correctness of a program, just the way you write code."), /* @__PURE__ */ g("div", { class: "options" }, Style), /* @__PURE__ */ g(NavBar, null));
+    return /* @__PURE__ */ g(w, null, /* @__PURE__ */ g("h2", { class: "header" }, "Coding Style Options"), /* @__PURE__ */ g("div", { class: "explanation" }, "You can enable some additional style checks that are not on by default. These do not affect the correctness of a program, just the way you write code."), /* @__PURE__ */ g("div", { class: "options" }, Style), /* @__PURE__ */ g(NavBar, null), /* @__PURE__ */ g(DownloadBar, null));
+  }
+  function Page_Done() {
+    return /* @__PURE__ */ g(w, null, /* @__PURE__ */ g("h2", { class: "header" }, "Coding Style Options"), /* @__PURE__ */ g("div", { class: "explanation" }, "You can enable some additional style checks that are not on by default. These do not affect the correctness of a program, just the way you write code."), /* @__PURE__ */ g("div", { class: "options" }, Style), /* @__PURE__ */ g(NavBar, null), /* @__PURE__ */ g(DownloadBar, null));
   }
   function NavBar() {
     const props = P2(AppPropsContext);
@@ -675,6 +697,97 @@
         return /* @__PURE__ */ g("div", { title: pageName, class: "progress-next" }, "\u{1F518}");
       }
     }));
+  }
+  function DownloadBar() {
+    const props = P2(AppPropsContext);
+    const copyToClipboard = x2(() => {
+      if (window.location.protocol === "https") {
+        navigator.clipboard.writeText(getJSON(props));
+      } else {
+        alert(getJSON(props));
+      }
+    }, [props]);
+    const download = x2(() => {
+      const link = document.createElement("a");
+      const blob = new Blob([getJSON(props)], { "type": "text/json" });
+      link.href = window.URL.createObjectURL(blob);
+      link.download = "tsconfig.json";
+      link.click();
+    }, [props]);
+    return /* @__PURE__ */ g(w, null, /* @__PURE__ */ g("div", { class: "download-bar" }, /* @__PURE__ */ g("span", { tabIndex: 0, onClick: download }, /* @__PURE__ */ g("span", { class: "material-symbols-outlined icon" }, "download"), "Download"), /* @__PURE__ */ g("span", { tabIndex: 0 }, /* @__PURE__ */ g("span", { class: "material-symbols-outlined icon" }, "data_object"), "Show JSON"), /* @__PURE__ */ g("span", { tabIndex: 0, onClick: copyToClipboard }, /* @__PURE__ */ g("span", { class: "material-symbols-outlined icon" }, "content_copy"), "Copy to Clipboard")), /* @__PURE__ */ g("pre", null, getJSON(props)));
+  }
+  function getJSON(props) {
+    const lines = [];
+    const optionsLines = [];
+    optionsLines.push(`"lib": ${getLib()}`);
+    ;
+    optionsLines.push(`"target": "${getTargetName()}"`);
+    if (props.environment === "donebun") {
+      optionsLines.push(`"module": "preserve"`);
+    } else {
+      if (props.bundler === "use-bundler") {
+        optionsLines.push(`"module": "esnext"`);
+        optionsLines.push(`"allowImportingTsExtensions": true`);
+        optionsLines.push(`"moduleResolution": "bundler"`);
+      } else {
+        optionsLines.push(`"module": "nodenext"`);
+      }
+    }
+    optionsLines.push(`"rootDir": "${props.srcDir}"`);
+    if (props.environment === "donebun" || props.bundler === "use-bundler") {
+      if (props.environment === "agnostic") {
+        optionsLines.push(`"emitDeclarationOnly": true`);
+      } else {
+        optionsLines.push(`"noEmit": true`);
+      }
+    } else {
+      optionsLines.push(`"outDir": "${props.outDir}"`);
+    }
+    if (props.jsx === "newer") {
+      if (props.bundler === "use-bundler") {
+        optionsLines.push(`"jsx": "preserve"`);
+      } else {
+        optionsLines.push(`"jsx": "react-jsx"`);
+      }
+    }
+    if (props.environment === "nodejs") {
+      optionsLines.push(`"types": ["node"]`);
+    } else {
+      optionsLines.push(`"types": []`);
+    }
+    optionsLines.push(`"strict": true`);
+    optionsLines.push(`"forceConsistentCasingInFileNames": true`);
+    optionsLines.push(`"moduleDetection": "force"`);
+    for (const str of [...StrictnessNames, ...GoodIdeaNames]) {
+      if (props[str])
+        optionsLines.push(`"${str}": true`);
+    }
+    for (const str of StyleNames) {
+      if (props[str])
+        optionsLines.push(`"${str}": true`);
+    }
+    optionsLines.push(`"skipLibCheck": true`);
+    lines.push("{");
+    lines.push(`	"compilerOptions": {`);
+    lines.push(optionsLines.map((line) => `		${line}`).join(",\n"));
+    lines.push(`	},`);
+    lines.push(`	"include": ["${props.srcDir}"]`);
+    lines.push("}\n");
+    return lines.join("\n");
+    function getLib() {
+      if (props.environment === "web") {
+        return `["dom", "${getTargetName()}"]`;
+      } else {
+        return `["${getTargetName()}"]`;
+      }
+    }
+    function getTargetName() {
+      return {
+        "runtime-next": "esnext",
+        "runtime-modern": "es2022",
+        "runtime-older": "es2016"
+      }[props.runtimeVersion];
+    }
   }
   function getNextPage(props) {
     return PageNames[PageNames.indexOf(props.pageName) + 1];

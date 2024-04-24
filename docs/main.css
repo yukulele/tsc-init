@@ -156,4 +156,33 @@ div.progress-bar {
 
 div.progress-bar div {
     font-size: 150%;
+    cursor: default;
+}
+
+div.download-bar {
+    margin-top: 1em;
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+div.download-bar > span {
+    display: flex;
+    flex-direction: row;
+    align-items: center;;
+    font-size: 110%;
+
+    cursor: pointer;
+    background: #202020;
+    padding: 0.4em 0.6em 0.4em 0.6em;
+    border-radius: 0.6em;
+}
+
+span.icon {
+    margin-right: 0.2em;
+}
+
+pre {
+    tab-size: 2;
 }
