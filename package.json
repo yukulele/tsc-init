@@ -7,7 +7,8 @@
     "doc": "docs"
   },
   "scripts": {
-    "serve": "esbuild --bundle src/main.tsx --outfile=docs/main.js --servedir=docs"
+    "serve": "esbuild --bundle src/main.tsx --outfile=docs/main.js --servedir=docs",
+    "build": "esbuild --bundle src/main.tsx --outfile=docs/main.js"
   },
   "keywords": [],
   "author": "",

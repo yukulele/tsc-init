@@ -146,4 +146,10 @@ div.control {
 
 div.progress-bar {
     margin-top: auto;
+    display: flex;
+    flex-direction: row;
+}
+
+div.progress-bar div {
+    font-size: 150%;
 }

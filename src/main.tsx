@@ -239,7 +239,19 @@ function NavBar() {
 }
 
 function ProgressBar() {
-    return <div class="progress-bar">🔘🔘🔘🔘🔘🔘🔘🔘🔘|🔘🔘🔘</div>;
+    const props = useContext(AppPropsContext);
+    const currentIndex = PageNames.indexOf(props.pageName);
+    return <div class="progress-bar">
+        {PageNames.map((pageName, index) => {
+            if (index < currentIndex) {
+                return <div title={pageName} class="progress-done">☑️</div>;
+            } else if (index === currentIndex) {
+                return <div title={pageName} class="progress-current">🔵</div>;
+            } else {
+                return <div title={pageName} class="progress-next">🔘</div>;
+            }
+        })}
+    </div>;
 }
 
 export { };
