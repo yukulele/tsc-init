@@ -138,7 +138,6 @@ function App(props: AppProps) {
             case 'Style-Options':
                 return <Page_Style />;
             case 'Done':
-                debugger;
                 return <Page_Done />;
         }
     }

@@ -16,7 +16,7 @@ h2 {
 
 div.wizard {
     display: flex;
-    width: 40em;
+    width: 32em;
     height: 45em;
 
     margin-left: auto;
@@ -103,10 +103,18 @@ input[type="checkbox"] {
 
 input[type="radio"] {
     flex-shrink: 0;
-    width: 1.5em;
+    flex-grow: 0;
+    max-width: 1.5em;
     height: 1.5em;
     margin-right: 1em;
     margin-left: 0em;
+}
+
+input:not([type="input" i], [type="checkbox" i]) {
+    font-family: 'Courier New', Courier, monospace;
+    margin-top: 0.4em;
+    margin-bottom: 0.5em;
+    width: 12em;
 }
 
 pre {
@@ -155,7 +163,7 @@ div.progress-bar {
 }
 
 div.progress-bar div {
-    font-size: 150%;
+    font-size: 80%;
     cursor: default;
 }
 
