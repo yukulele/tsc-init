@@ -1,5 +1,5 @@
 import * as React from 'preact';
-import { useRef, useEffect, useLayoutEffect, useContext, useCallback } from 'preact/hooks';
+import { useRef, useEffect, useLayoutEffect, useContext, useCallback, useState } from 'preact/hooks';
 import { AppPropsContext, RadioContext } from './context.jsx';
 import { CheckBox, RadioButton, TextBox } from './controls.jsx';
 import { Bundler, Environment, GoodIdeas, JSXGroup, ModuleSystem, RuntimeVersion, Strictness, Style } from './options.jsx';
@@ -302,12 +302,16 @@ function ProgressBar() {
 
 function DownloadBar() {
     const props = useContext(AppPropsContext);
+    const [didCopy, setCopy] = useState(false);
+
     const copyToClipboard = useCallback(() => {
         if (window.location.protocol === "https:") {
             navigator.clipboard.writeText(getJSON(props));
         } else {
             alert(getJSON(props));
         }
+        setCopy(true);
+        setTimeout(() => setCopy(false), 5000);
     }, [props]);
 
     const download = useCallback(() => {
@@ -335,7 +339,7 @@ function DownloadBar() {
             </a>
 
             <a href="#" onClick={copyToClipboard}>
-                <span class="material-symbols-outlined icon">content_copy</span>
+                <span class="material-symbols-outlined icon">{didCopy ? "done" : "content_copy"}</span>
                 Copy to Clipboard
             </a>
         </div>
