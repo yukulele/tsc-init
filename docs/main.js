@@ -708,7 +708,7 @@
   function DownloadBar() {
     const props = P2(AppPropsContext);
     const copyToClipboard = x2(() => {
-      if (window.location.protocol === "https") {
+      if (window.location.protocol === "https:") {
         navigator.clipboard.writeText(getJSON(props));
       } else {
         alert(getJSON(props));

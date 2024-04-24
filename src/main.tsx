@@ -303,7 +303,7 @@ function ProgressBar() {
 function DownloadBar() {
     const props = useContext(AppPropsContext);
     const copyToClipboard = useCallback(() => {
-        if (window.location.protocol === "https") {
+        if (window.location.protocol === "https:") {
             navigator.clipboard.writeText(getJSON(props));
         } else {
             alert(getJSON(props));
