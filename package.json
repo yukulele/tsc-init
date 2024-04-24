@@ -1,0 +1,19 @@
+{
+  "name": "tsc-init",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "serve": "esbuild --bundle src/main.tsx --outfile=docs/main.js --servedir=docs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "esbuild": "^0.20.2",
+    "preact": "^10.20.2"
+  }
+}

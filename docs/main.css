@@ -1,0 +1,147 @@
+body {
+    background: #707070;
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h1 {
+    text-align: center;
+    text-shadow: #000000 3px 3px 8px;
+}
+
+h2 {
+    padding: 0px;
+    margin-top: 0px;
+}
+
+div#app {
+    display: flex;
+    width: 40em;
+    margin-left: auto;
+    margin-right: auto;
+
+    padding: 1em;
+
+    border: solid white 6px;
+    border-radius: 1em;
+    background: #404040;
+    box-shadow: #000000 12px 12px 18px;
+
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+div.explanation {
+    margin-bottom: 1em;
+}
+
+div.options {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+label.option {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    font-family: inherit;
+    font-size: inherit;
+    color: white;
+    text-align: left;
+
+    width: 85%;
+    margin: 0.4em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    padding-left: 1.5em;
+    padding-right: 4em;
+    border-radius: 8px;
+    vertical-align: middle;
+
+    border: 0px;
+    border-radius: 2.5em;
+    background: #101010;
+    box-shadow: rgba(255, 255, 255, 0.5) 0px 0px 6px;
+}
+
+button {
+    background: #202020;
+    width: 5em;
+    color: white;
+    font-family: inherit;
+    font-size: 120%;
+    border: solid white 2px;
+    border-radius: 0.5em;
+    padding: 0.6em 1em 0.6em 1em;
+    box-shadow: rgba(255, 255, 255, 0.2) 4px 4px 5px;
+}
+
+button:focus-visible {
+    font-weight: bold;
+}
+
+label:has(> input:focus-visible) {
+    /* background: green;*/
+}
+
+input[type="checkbox"] {
+    flex-shrink: 0;
+    width: 1.75em;
+    height: 1.75em;
+    margin-right: 1em;
+    margin-left: 0em;
+}
+
+input[type="radio"] {
+    flex-shrink: 0;
+    width: 1.5em;
+    height: 1.5em;
+    margin-right: 1em;
+    margin-left: 0em;
+}
+
+pre {
+    margin-top: 0px;
+    margin-bottom: 5px;
+    font-size: 110%;
+}
+
+div.option-description {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 100%;
+    flex-grow: 1;
+}
+
+div.option-title {
+    font-weight: bold;;
+}
+
+div.navigation-bar {
+    margin-top: 1.5em;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+div.controls {
+    display: flex;
+}
+
+div.control {
+    border: solid #004 3px;
+    width: 6em;
+    line-height: 2.5em;
+    height: 2.5em;
+    font-weight: bold;
+    text-align: center;
+}
+
+div.progress-bar {
+    margin-top: auto;
+}
