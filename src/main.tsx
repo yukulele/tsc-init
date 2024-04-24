@@ -47,6 +47,7 @@ export type PageName = (typeof PageNames)[number];
 
 export type AppProps = {
     pageName: PageName;
+    previewJSON: boolean;
 
     environment: "web" | "nodejs" | "donebun" | "agnostic";
     runtimeVersion: "runtime-next" | "runtime-modern" | "runtime-older";
@@ -59,10 +60,11 @@ export type AppProps = {
 } & Record<AllBooleanOptionsNames, boolean>;
 
 export const update = (() => {
-    const renderTarget = document.getElementById("app") ?? (() => { throw new Error("Couldn't find div#app") })();
+    const renderTarget = document.getElementById("render-target") ?? (() => { throw new Error("Couldn't find div#render-target") })();
 
     let props: AppProps = {
         pageName: PageNames[0],
+        previewJSON: false,
 
         srcDir: "./src",
         outDir: "./dist",
@@ -109,7 +111,10 @@ export const update = (() => {
 
 function App(props: AppProps) {
     return <AppPropsContext.Provider value={props}>
-        {getPage()}
+        <div class="wizard">
+            {getPage()}
+        </div>
+        {!props.previewJSON ? null : <pre>{getJSON(props)}</pre>}
     </AppPropsContext.Provider>;
 
     function getPage(): JSX.Element {
@@ -132,7 +137,8 @@ function App(props: AppProps) {
                 return <Page_Strictness />;
             case 'Style-Options':
                 return <Page_Style />;
-            case "Done":
+            case 'Done':
+                debugger;
                 return <Page_Done />;
         }
     }
@@ -246,13 +252,18 @@ function Page_Style() {
 }
 
 function Page_Done() {
+    const clear = useCallback(() => {
+        const params = new URLSearchParams();
+        params.set("clear", "true");
+        window.location.search = params.toString();
+    }, []);
     return <>
-        <h2 class="header">Coding Style Options</h2>
+        <h2 class="header">Complete!</h2>
         <div class="explanation">
-            You can enable some additional style checks that are not on by default.
-            These do not affect the correctness of a program, just the way you write code.
+            <p>This is all of the options! Use the download links below to get your tsconfig file.</p>
+
+            <p>You can also <a class="is-link" onClick={clear}>start over</a></p>
         </div>
-        <div class="options">{Style}</div>
         <NavBar />
         <DownloadBar />
     </>;
@@ -298,7 +309,7 @@ function DownloadBar() {
             alert(getJSON(props));
         }
     }, [props]);
-    
+
     const download = useCallback(() => {
         const link = document.createElement('a');
         const blob = new Blob([getJSON(props)], { 'type': "text/json" });
@@ -307,24 +318,27 @@ function DownloadBar() {
         link.click();        
     }, [props]);
 
+    const toggleJson = useCallback(() => {
+        update({...props, previewJSON: !props.previewJSON })
+    }, [props])
+
     return <>
         <div class="download-bar">
-            <span tabIndex={0} onClick={download}>
+            <a href="#" onClick={download}>
                 <span class="material-symbols-outlined icon">download</span>
                 Download
-            </span>
+            </a>
 
-            <span tabIndex={0}>
+            <a href="#" onClick={toggleJson}>
                 <span class="material-symbols-outlined icon">data_object</span>
                 Show JSON
-            </span>
+            </a>
 
-            <span tabIndex={0} onClick={copyToClipboard}>
+            <a href="#" onClick={copyToClipboard}>
                 <span class="material-symbols-outlined icon">content_copy</span>
                 Copy to Clipboard
-            </span>
+            </a>
         </div>
-        <pre>{getJSON(props)}</pre>
     </>
 }
 
@@ -429,10 +443,10 @@ function classNames(obj: object) {
     return Object.entries(obj).filter(([k, v]) => !!v).map(([k]) => k).join(" ");
 }
 function getNextPage(props: AppProps): PageName {
-    return PageNames[PageNames.indexOf(props.pageName) + 1];
+    return PageNames[Math.min(PageNames.indexOf(props.pageName) + 1, PageNames.length - 1)];
 }
 
 function getPreviousPage(props: AppProps): PageName {
-    return PageNames[PageNames.indexOf(props.pageName) - 1];
+    return PageNames[Math.max(PageNames.indexOf(props.pageName) - 1, 0)];
 }
 

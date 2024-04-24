@@ -576,11 +576,12 @@
     "noPropertyAccessFromIndexSignature"
   ];
   var update = (() => {
-    const renderTarget = document.getElementById("app") ?? (() => {
-      throw new Error("Couldn't find div#app");
+    const renderTarget = document.getElementById("render-target") ?? (() => {
+      throw new Error("Couldn't find div#render-target");
     })();
     let props = {
       pageName: PageNames[0],
+      previewJSON: false,
       srcDir: "./src",
       outDir: "./dist",
       environment: "web",
@@ -619,7 +620,7 @@
     }
   })();
   function App(props) {
-    return /* @__PURE__ */ g(AppPropsContext.Provider, { value: props }, getPage());
+    return /* @__PURE__ */ g(AppPropsContext.Provider, { value: props }, /* @__PURE__ */ g("div", { class: "wizard" }, getPage()), !props.previewJSON ? null : /* @__PURE__ */ g("pre", null, getJSON(props)));
     function getPage() {
       switch (props.pageName) {
         case "Environment":
@@ -641,6 +642,7 @@
         case "Style-Options":
           return /* @__PURE__ */ g(Page_Style, null);
         case "Done":
+          debugger;
           return /* @__PURE__ */ g(Page_Done, null);
       }
     }
@@ -673,7 +675,12 @@
     return /* @__PURE__ */ g(w, null, /* @__PURE__ */ g("h2", { class: "header" }, "Coding Style Options"), /* @__PURE__ */ g("div", { class: "explanation" }, "You can enable some additional style checks that are not on by default. These do not affect the correctness of a program, just the way you write code."), /* @__PURE__ */ g("div", { class: "options" }, Style), /* @__PURE__ */ g(NavBar, null), /* @__PURE__ */ g(DownloadBar, null));
   }
   function Page_Done() {
-    return /* @__PURE__ */ g(w, null, /* @__PURE__ */ g("h2", { class: "header" }, "Coding Style Options"), /* @__PURE__ */ g("div", { class: "explanation" }, "You can enable some additional style checks that are not on by default. These do not affect the correctness of a program, just the way you write code."), /* @__PURE__ */ g("div", { class: "options" }, Style), /* @__PURE__ */ g(NavBar, null), /* @__PURE__ */ g(DownloadBar, null));
+    const clear = x2(() => {
+      const params = new URLSearchParams();
+      params.set("clear", "true");
+      window.location.search = params.toString();
+    }, []);
+    return /* @__PURE__ */ g(w, null, /* @__PURE__ */ g("h2", { class: "header" }, "Complete!"), /* @__PURE__ */ g("div", { class: "explanation" }, /* @__PURE__ */ g("p", null, "This is all of the options! Use the download links below to get your tsconfig file."), /* @__PURE__ */ g("p", null, "You can also ", /* @__PURE__ */ g("a", { class: "is-link", onClick: clear }, "start over"))), /* @__PURE__ */ g(NavBar, null), /* @__PURE__ */ g(DownloadBar, null));
   }
   function NavBar() {
     const props = P2(AppPropsContext);
@@ -714,7 +721,10 @@
       link.download = "tsconfig.json";
       link.click();
     }, [props]);
-    return /* @__PURE__ */ g(w, null, /* @__PURE__ */ g("div", { class: "download-bar" }, /* @__PURE__ */ g("span", { tabIndex: 0, onClick: download }, /* @__PURE__ */ g("span", { class: "material-symbols-outlined icon" }, "download"), "Download"), /* @__PURE__ */ g("span", { tabIndex: 0 }, /* @__PURE__ */ g("span", { class: "material-symbols-outlined icon" }, "data_object"), "Show JSON"), /* @__PURE__ */ g("span", { tabIndex: 0, onClick: copyToClipboard }, /* @__PURE__ */ g("span", { class: "material-symbols-outlined icon" }, "content_copy"), "Copy to Clipboard")), /* @__PURE__ */ g("pre", null, getJSON(props)));
+    const toggleJson = x2(() => {
+      update({ ...props, previewJSON: !props.previewJSON });
+    }, [props]);
+    return /* @__PURE__ */ g(w, null, /* @__PURE__ */ g("div", { class: "download-bar" }, /* @__PURE__ */ g("a", { href: "#", onClick: download }, /* @__PURE__ */ g("span", { class: "material-symbols-outlined icon" }, "download"), "Download"), /* @__PURE__ */ g("a", { href: "#", onClick: toggleJson }, /* @__PURE__ */ g("span", { class: "material-symbols-outlined icon" }, "data_object"), "Show JSON"), /* @__PURE__ */ g("a", { href: "#", onClick: copyToClipboard }, /* @__PURE__ */ g("span", { class: "material-symbols-outlined icon" }, "content_copy"), "Copy to Clipboard")));
   }
   function getJSON(props) {
     const lines = [];
@@ -790,9 +800,9 @@
     }
   }
   function getNextPage(props) {
-    return PageNames[PageNames.indexOf(props.pageName) + 1];
+    return PageNames[Math.min(PageNames.indexOf(props.pageName) + 1, PageNames.length - 1)];
   }
   function getPreviousPage(props) {
-    return PageNames[PageNames.indexOf(props.pageName) - 1];
+    return PageNames[Math.max(PageNames.indexOf(props.pageName) - 1, 0)];
   }
 })();
