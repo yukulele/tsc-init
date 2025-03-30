@@ -1,12 +1,15 @@
+html{
+    color-scheme: light dark;
+    background-color: light-dark(#fff, #000);
+}
+
 body {
-    background: #707070;
-    color: white;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 h1 {
-    text-align: center;
     text-shadow: #000000 3px 3px 8px;
+    font-size: 1.2em;
 }
 
 h2 {
@@ -14,19 +17,21 @@ h2 {
     margin-top: 0px;
 }
 
+#render-target{
+    display: flex;
+    gap: 1em;
+}
+
 div.wizard {
     display: flex;
     width: 32em;
-    height: 45em;
-
-    margin-left: auto;
-    margin-right: auto;
+    min-height: 38em;
 
     padding: 1em;
 
-    border: solid white 6px;
+    border: solid grey 6px;
     border-radius: 1em;
-    background: #404040;
+    background: light-dark(#c0c0c0, #404040);
     box-shadow: #000000 12px 12px 18px;
 
     flex-direction: column;
@@ -53,7 +58,6 @@ label.option {
 
     font-family: inherit;
     font-size: inherit;
-    color: white;
     text-align: left;
 
     width: 85%;
@@ -67,14 +71,13 @@ label.option {
 
     border: 0px;
     border-radius: 2.5em;
-    background: #101010;
+    background: light-dark(#e0e0e0, #101010);
     box-shadow: rgba(255, 255, 255, 0.5) 0px 0px 6px;
 }
 
 button {
-    background: #202020;
+    background: light-dark(#e0e0e0, #101010);
     width: 5em;
-    color: white;
     font-family: inherit;
     font-size: 120%;
     border: solid white 2px;
@@ -182,7 +185,7 @@ div.download-bar > a {
     font-size: 110%;
 
     cursor: pointer;
-    background: #202020;
+    background: light-dark(#e0e0e0, #101010);
     padding: 0.4em 0.6em 0.4em 0.6em;
     border-radius: 0.6em;
 }
