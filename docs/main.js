@@ -623,7 +623,6 @@
     })();
     let props = {
       pageName: PageNames[0],
-      previewJSON: false,
       srcDir: "./src",
       outDir: "./dist",
       environment: "web",
@@ -662,7 +661,7 @@
     }
   })();
   function App(props) {
-    return /* @__PURE__ */ g(AppPropsContext.Provider, { value: props }, /* @__PURE__ */ g("div", { class: "wizard" }, getPage()), !props.previewJSON ? null : /* @__PURE__ */ g("pre", null, getJSON(props)));
+    return /* @__PURE__ */ g(AppPropsContext.Provider, { value: props }, /* @__PURE__ */ g("div", { class: "wizard" }, getPage()), /* @__PURE__ */ g("pre", null, getJSON(props)));
     function getPage() {
       switch (props.pageName) {
         case "Environment":
@@ -765,10 +764,7 @@
       link.download = "tsconfig.json";
       link.click();
     }, [props]);
-    const toggleJson = x2(() => {
-      update({ ...props, previewJSON: !props.previewJSON });
-    }, [props]);
-    return /* @__PURE__ */ g(w, null, /* @__PURE__ */ g("div", { class: "download-bar" }, /* @__PURE__ */ g("a", { href: "#", onClick: download }, /* @__PURE__ */ g("span", { class: "material-symbols-outlined icon" }, "download"), "Download"), /* @__PURE__ */ g("a", { href: "#", onClick: toggleJson }, /* @__PURE__ */ g("span", { class: "material-symbols-outlined icon" }, "data_object"), "Show JSON"), /* @__PURE__ */ g("a", { href: "#", onClick: copyToClipboard }, /* @__PURE__ */ g("span", { class: "material-symbols-outlined icon" }, didCopy ? "done" : "content_copy"), "Copy to Clipboard")));
+    return /* @__PURE__ */ g(w, null, /* @__PURE__ */ g("div", { class: "download-bar" }, /* @__PURE__ */ g("a", { href: "#", onClick: download }, /* @__PURE__ */ g("span", { class: "material-symbols-outlined icon" }, "download"), "Download"), /* @__PURE__ */ g("a", { href: "#", onClick: copyToClipboard }, /* @__PURE__ */ g("span", { class: "material-symbols-outlined icon" }, didCopy ? "done" : "content_copy"), "Copy to Clipboard")));
   }
   function getJSON(props) {
     const lines = [];

@@ -47,7 +47,6 @@ export type PageName = (typeof PageNames)[number];
 
 export type AppProps = {
     pageName: PageName;
-    previewJSON: boolean;
 
     environment: "web" | "nodejs" | "donebun" | "agnostic";
     runtimeVersion: "runtime-next" | "runtime-modern" | "runtime-older";
@@ -64,7 +63,6 @@ export const update = (() => {
 
     let props: AppProps = {
         pageName: PageNames[0],
-        previewJSON: false,
 
         srcDir: "./src",
         outDir: "./dist",
@@ -114,7 +112,7 @@ function App(props: AppProps) {
         <div class="wizard">
             {getPage()}
         </div>
-        {!props.previewJSON ? null : <pre>{getJSON(props)}</pre>}
+        <pre>{getJSON(props)}</pre>
     </AppPropsContext.Provider>;
 
     function getPage(): JSX.Element {
@@ -321,20 +319,11 @@ function DownloadBar() {
         link.click();        
     }, [props]);
 
-    const toggleJson = useCallback(() => {
-        update({...props, previewJSON: !props.previewJSON })
-    }, [props])
-
     return <>
         <div class="download-bar">
             <a href="#" onClick={download}>
                 <span class="material-symbols-outlined icon">download</span>
                 Download
-            </a>
-
-            <a href="#" onClick={toggleJson}>
-                <span class="material-symbols-outlined icon">data_object</span>
-                Show JSON
             </a>
 
             <a href="#" onClick={copyToClipboard}>
